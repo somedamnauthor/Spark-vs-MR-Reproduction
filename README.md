@@ -4,3 +4,6 @@ Link to Paper: https://www.usenix.org/system/files/conference/nsdi12/nsdi12-fina
 
 To run Spark Experiment: 
 /var/scratch/$USER/spark/bin/spark-submit logReg.py 
+
+Data for LR at: 
+/var/scratch/ddps2212/data/lrData.txt
