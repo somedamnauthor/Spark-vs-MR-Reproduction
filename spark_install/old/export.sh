@@ -12,7 +12,7 @@ module load slurm
 module add prun
 
 #JAVA
-export JAVA_HOME=/var/scratch/$USER/jre1.8.0_351;
+export JAVA_HOME=/var/scratch/$USER/jdk-11.0.2;
 export PATH=${JAVA_HOME}/bin:${PATH};
 alias java="$JAVA_HOME/bin/java"
 
