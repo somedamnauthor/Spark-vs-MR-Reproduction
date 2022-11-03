@@ -15,13 +15,17 @@
 # limitations under the License.
 #
 
-"""
-This is an example implementation of PageRank. For more conventional use,
-Please refer to PageRank implementation provided by graphx
 
-Example Usage:
-bin/spark-submit examples/src/main/python/pagerank.py data/mllib/pagerank_data.txt 10
 """
+Modified from the pre-provided example script : $SPARK_HOME/examples/src/main/python/pagerank.py
+
+Experiment that runs 10 iterations of PageRank on a twitter dataset. On the 6th iteration it decouples one of the worker nodes by cancelling the reservation
+Note that the reservation ID has to be hardcoded
+
+Example Usage: (Note that 2 arguments are given apart from the script name - the local path to the file and the number of iterations)
+$SPARK_HOME/bin/spark-submit --master spark://10.141.0.16:7077 pagerank.py twitter_combined.txt 10
+"""
+
 import re
 import sys
 import time
@@ -44,14 +48,6 @@ def parseNeighbors(urls):
 if __name__ == "__main__":
 
     print("Python version:", sys.version)
- 
-    #if len(sys.argv) != 3:
-    #    print("Usage: pagerank <file> <iterations>", file=sys.stderr)
-    #    sys.exit(-1)
-
-    #print("WARN: This is a naive implementation of PageRank and is given as an example!\n" +
-    #      "Please refer to PageRank implementation provided by graphx",
-    #      file=sys.stderr)
 
     # Initialize the spark context.
     spark = SparkSession\
@@ -77,12 +73,14 @@ if __name__ == "__main__":
     # Calculates and updates URL ranks continuously using PageRank algorithm.
     for iteration in range(int(sys.argv[2])):
 
-        print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!   ------    ",iteration)
+        # On the 6th iteration, cancel the hardcoded reservation ID
         if iteration==5:
-		os.system("module add prun")
-		os.system("preserve -c 317368")
+            os.system("module add prun")
+            os.system("preserve -c 317368")
         
+        # Start time calculation here
         start = time.time()
+
         # Calculates URL contributions to the rank of other URLs.
         contribs = links.join(ranks).flatMap(
             lambda url_urls_rank: computeContribs(url_urls_rank[1][0], url_urls_rank[1][1]))
@@ -90,11 +88,15 @@ if __name__ == "__main__":
         # Re-calculates URL ranks based on neighbor contributions.
         ranks = contribs.reduceByKey(add).mapValues(lambda rank: rank * 0.85 + 0.15)
 
+        # An action here is carried out to trigger the transformations above and help measure the time of iteration
         for (link, rank) in ranks.collect():
         	#print("%s has rank: %s." % (link, rank))
-		print('')
+            print('')
 
+        # End time calculation here
         end = time.time()
+
+        # Store the times of each iteration in a list
         iterTimes.append(end-start)
 
 
@@ -102,8 +104,7 @@ if __name__ == "__main__":
     for (link, rank) in ranks.collect():
         print("%s has rank: %s." % (link, rank))
 
-    #print("ITERATION TIMES:",iterTimes)
-
+    # Write iteration times out onto a file
     with open('out_pagerankTimes.txt', 'w') as f:
     	for line in iterTimes:
         	print >> f, line
