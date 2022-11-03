@@ -6,11 +6,11 @@ https://www.usenix.org/system/files/conference/nsdi12/nsdi12-final138.pdf
 
 #### Requirements
 
-Spark Version 2.4.0
-
-Python Version 2.7
-
-Java 8
+<ul>
+<li>Spark Version 2.4.0</li>
+<li>Python Version 2.7</li>
+<li>Java 8</li>
+</ul>
 
 Edit respective environment variables for Spark, Python and Java in custom.sh
 
