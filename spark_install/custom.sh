@@ -21,18 +21,11 @@ echo "master is "$master
 echo "worker is "$worker
 
 #Comment out these lines if you already downloaded them.
-#wget -O /var/scratch/$USER/spark-2.4.0-bin-hadoop2.7.tgz https://archive.apache.org/dist/spark/spark-2.4.0/spark-2.4.0-bin-hadoop2.7.tgz && \
-#tar -xf /var/scratch/$USER/spark-2.4.0-bin-hadoop2.7.tgz -C /var/scratch/$USER && mv /var/scratch/$USER/spark-2.4.0-bin-hadoop2.7 /var/scratch/$USER/spark
-#wget -O /var/scratch/$USER/openjdk-11.0.2_linux-x64_bin.tar.gz https://download.java.net/java/GA/jdk11/9/GPL/openjdk-11.0.2_linux-x64_bin.tar.gz && \
-#tar -zxf /var/scratch/$USER/openjdk-11.0.2_linux-x64_bin.tar.gz -C /var/scratch/$USER
+wget -O /var/scratch/$USER/spark-2.4.0-bin-hadoop2.7.tgz https://archive.apache.org/dist/spark/spark-2.4.0/spark-2.4.0-bin-hadoop2.7.tgz && \
+tar -xf /var/scratch/$USER/spark-2.4.0-bin-hadoop2.7.tgz -C /var/scratch/$USER && mv /var/scratch/$USER/spark-2.4.0-bin-hadoop2.7 /var/scratch/$USER/spark
 
-
-
-#wget -O /var/scratch/$USER/spark-3.3.1-bin-hadoop2.7.tgz https://dlcdn.apache.org/spark/spark-3.3.1/spark-3.3.1-bin-hadoop2.tgz && \
-#tar xzvf /var/scratch/$USER/spark-3.3.1-bin-hadoop2.7.tgz -C /var/scratch/$USER && mv /var/scratch/$USER/spark-3.3.1-bin-hadoop2.7 /var/scratch/$USER/spark
 source export.sh
 
-#cd /var/scratch/$USER/spark/conf && cp spark-env.sh.template spark-env.sh && cp workers.template workers
 cd /var/scratch/$USER/spark/conf && cp spark-env.sh.template spark-env.sh
 
 sleep 3
@@ -43,6 +36,4 @@ echo "export PYSPARK_PYTHON=/bin/python" >> spark-env.sh
 echo "export SPARK_HOME=/var/scratch/ddps2212/spark"
 echo "$worker" > workers
 
-#ssh $master "cd /var/scratch/$USER/spark && ./bin/spark-submit examples/src/main/python/pi.py 1000"
-#ssh $master "cd /var/scratch/$USER/spark && ./bin/spark-submit examples/sp_script.py"
 ssh $master "cd /var/scratch/$USER/spark"
