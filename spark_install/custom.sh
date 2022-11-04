@@ -1,6 +1,6 @@
 #!/bin/bash
 # Simple script for deploying Spark in standalone mode on DAS-5 for the DDPS course 2022.
-# Author: Yuxuan Zhao
+# Modification of the script by Original Author: Yuxuan Zhao
 
 set -eu
 

@@ -22,13 +22,14 @@ preserve -# 3 -t 02:00:00
 source export.sh
 source custom.sh <nodes>
 ```
+The 3 lines above reserve 3 nodes and sets environment variables on the nodes
 
-Experiment 1:
+###### Experiment 1:
 ```
 $SPARK_HOME/bin/spark-submit --master <master_node_IP>:<port> pagerank.py <data_file> 10
 ```
 
-Experiment 2:
+###### Experiment 2:
 ```
 $SPARK_HOME/bin/spark-submit --master <master_node_IP>:<port> intQ_matchCount.py
 
